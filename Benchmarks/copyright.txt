@@ -1,0 +1,2 @@
+The four bipartite graphs are taken from the dataset in https://github.com/shahamer/maximum-biclique-benchmark 
+ Shaham, E.: maximum biclique benchmark. (Dic 2019)
