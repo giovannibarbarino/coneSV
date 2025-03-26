@@ -55,7 +55,7 @@ if ~isfield(options,'maxiter')
     options.maxiter = 500;
 end
 if ~isfield(options,'accuracy')
-    options.accuracy = 1e-4;
+    options.accuracy = 1e-6;
 end
 % Representation for P and Q
 if ~isfield(options,'cone')
@@ -120,19 +120,19 @@ if ~isfield(options,'v0')
     options.v0 = update_cone(A'*u0,options.cone.Q,options.H,options.h);
 end
 v0 = options.v0; % initialization
-v = v0; ve = v; vp = 0; % v sequences
+v = 0; ve = v0; vp = 0; % v sequences
 u = 0; ue = 0; up = 0; % u sequences
 i = 1; % iteration count
-rs = 0; % restart
+beta_p = options.beta; rs = 0; % restart
 if options.display == 1
     disp('Evolution of iteration number and the objective:');
     tdelay = 0.05; numprint = 0;
 end
 while i <= options.maxiter && ...
-        (rs == 1 || (norm(v-vp) >= options.accuracy || ...
-        norm(u-up) >= options.accuracy)) && ...
-        (i <= 3 || abs(e(i-2)-e(i-1)) >= options.accuracy*abs(e(i-2)))
-    rs = 0; % ste restart to zero
+        (rs == 1 || norm(v-vp) >= options.accuracy || ...
+        norm(u-up) >= options.accuracy || ...
+        (i <= 3 || abs(e(i-2)-e(i-1)) >= options.accuracy*abs(e(i-2))))
+    rs = 0; % set restart to zero
     up = u; vp = v; % previous iterates
     % Update u
     u = update_cone(A*ve,options.cone.P,options.G,options.g);
@@ -153,12 +153,14 @@ while i <= options.maxiter && ...
         ve = v;
     end
     % Update extrapolation parameters depending on the error
-    if i>=2 && e(i-1) < e(i)
-        options.beta = options.beta/options.eta;
-        u = up; v = vp; ve = vp; ue = up;
-        rs = 1; % restart is one
+    if i>=2 && e(i-1) < e(i) && options.beta > 0
+        beta_p = options.beta/options.eta;
+        options.beta = 0;
+        u = up; v = vp; ve = vp; % ue = up; 
+        e(i) = e(i-1); rs = 1; % restart is one
     else
-        options.beta = min(1,options.beta*options.gamma);
+        options.beta = min(1,beta_p*options.gamma);
+        beta_p = options.beta;
     end
     % Display evolution of the error
     if options.display == 1 && toc >= tdelay*(2^numprint)
