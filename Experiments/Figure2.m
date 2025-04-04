@@ -34,7 +34,7 @@ G = G(:,2:end);
 % E-AO
 options.cone.P = 'generator'; options.cone.Q = 'nonnegort';
 options.G = G;
-options.accuracy = 1e-10; options.maxiter = 500;
+options.accuracy = 1e-6; options.maxiter = 500;
 options.beta = .5; tol = 1e-8;
 
 EAO_all = zeros(Ninitpoint,Ndisctime+1);
@@ -151,7 +151,7 @@ EAO_mean = mean(EAO_all,1);
 
 
 % SRPL
-tol = 1e-8; mu1 = 0.25; mu2 = 0.01;
+tol = 1e-8; mu1 = 1; mu2 = 1;
 
 SRPL_all = zeros(Ninitpoint,Ndisctime+1);
 for j = 1:Ninitpoint % for all random initial points
@@ -185,4 +185,5 @@ SRPL_mean = mean(SRPL_all,1);
 
 
 % Gurobi
+A = 9*eye(n); 
 generators_gurobi_uv_test(G,H,A,timelimit,1);
