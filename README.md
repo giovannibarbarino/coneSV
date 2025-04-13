@@ -6,7 +6,7 @@ $$\min_{u,v} u^TAv \quad \text{ such that } \quad u \in P, \quad v \in Q,\quad  
 
 where
 
-$$P = \\\{u | u = Gx,\\, x\leq 0\\\}, \qquad Q = \\\{u | u = Hx,\\, x \geq 0\\\}, $$
+$$P = \\\{u | u = Gx,\\, x \geq 0\\\}, \qquad Q = \\\{u | u = Hx,\\, x \geq 0\\\}, $$
 
 and the columns of $G$ and $H$ contain the normalized generators of the cones $P$ and $Q$, resp. 
 
