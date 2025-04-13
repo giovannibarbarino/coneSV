@@ -2,7 +2,7 @@
 
 The methods in the repository solve the problem of cone-constrained singular values of the matrix A with respect to the cones $P$ and $Q$: 
 
-$$\min u^TAv \quad : \quad u \in P, \quad v \in Q,\quad  \\\|u\\\|=\\\|v\\\|=1,$$   
+$$\min_{u,v} u^TAv \quad \text{ such that } \quad u \in P, \quad v \in Q,\quad  \\\|u\\\|=\\\|v\\\|=1,$$   
 
 where
 
