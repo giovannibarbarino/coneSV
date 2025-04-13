@@ -1,6 +1,6 @@
 # Computing cone-constrained singular values of matrices
 
-The methods in the repository solve the problem of cone-constrained singular values of the matrix A with respect to the cones $P$ and $Q$: 
+The methods in the repository solve the problem of smallest cone-constrained singular values of the matrix A with respect to the cones $P$ and $Q$: 
 
 $$\min_{u,v} u^TAv \quad \text{ such that } \quad u \in P, \quad v \in Q,\quad  \\\|u\\\|=\\\|v\\\|=1,$$   
 
